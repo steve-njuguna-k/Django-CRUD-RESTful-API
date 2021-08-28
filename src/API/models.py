@@ -27,4 +27,4 @@ class Transcations(models.Model):
     transaction_timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.transaction_id()
+        return self.transaction_id
