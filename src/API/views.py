@@ -1,40 +1,42 @@
-from django.http.response import JsonResponse
 from rest_framework.response import Response
-from .models import Transcations
+from .models import Transactions
 from .serializers import TransactionsSerializer
 from rest_framework.decorators import api_view
+from rest_framework import status
 
 @api_view(['GET'])
-def ListTransactions(request):
-    transactions = Transcations.objects.all()
+def AllTransactions(request):
+    transactions = Transactions.objects.all()
     serializer = TransactionsSerializer(transactions, many=True)
-    return JsonResponse(serializer.data)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def TransactionsDetails(request, id):
-    transactions = Transcations.objects.get(id=id)
+    transactions = Transactions.objects.get(id=id)
     serializer = TransactionsSerializer(transactions, many=False)
-    return JsonResponse(serializer.data)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 def AddTransactions(request):
     serializer = TransactionsSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
-    return JsonResponse(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['PUT'])
 def UpdateTransactionsDetails(request, id):
-    transactions = Transcations.objects.get(id=id)
+    transactions = Transactions.objects.get(id=id)
     serializer = TransactionsSerializer(data=request.data, instance=transactions)
 
     if serializer.is_valid():
         serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    return JsonResponse(serializer.data)
+    return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['DELETE'])
 def DeleteTransaction(request, id):
-    transactions = Transcations.objects.get(id=id)
+    transactions = Transactions.objects.get(id=id)
     transactions.delete()
     return Response({'Transaction Record Successfully Deleted!'})

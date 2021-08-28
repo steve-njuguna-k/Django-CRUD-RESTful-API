@@ -14,16 +14,19 @@ CURRENCY = [
 ]
 
 # Create your models here.
-class Transcations(models.Model):
+class Transactions(models.Model):
     transaction_id = models.UUIDField(default=uuid.uuid4, unique=True, db_index=True, editable=False, max_length=50)
-    transaction_type = models.CharField(choices=TRANSACTION_TYPE, max_length=50)
-    transaction_currency = models.CharField(choices=CURRENCY, max_length=50)
-    transaction_amount = models.FloatField()
+    type = models.CharField(choices=TRANSACTION_TYPE, max_length=50)
+    currency = models.CharField(choices=CURRENCY, max_length=50)
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
     merchant_id = models.UUIDField(default=uuid.uuid4, unique=True, db_index=True, editable=False, max_length=50)
     merchant_name = models.CharField(max_length=50)
     customer_id = models.CharField(default=uuid.uuid4, unique=True, db_index=True, editable=False, max_length=50)
     customer_name = models.CharField(max_length=50)
-    transaction_timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.transaction_id
+        return str(self.transaction_id)
+
+    class Meta:
+        verbose_name_plural = 'Transactions'
