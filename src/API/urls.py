@@ -2,9 +2,10 @@ from . import views
 from django.urls import path
 
 urlpatterns = [
-    path('', views.AllTransactions, name="AllTransactions"),
-    path('api/transactions/<int:id>', views.TransactionsDetails, name="TransactionsDetails"),
-    path('api/transactions/create', views.AddTransactions, name="AddTransactions"),
-    path('api/transactions/update/<int:id>', views.UpdateTransactionsDetails, name="UpdateTransactionsDetails"),
-    path('api/transactions/delete/<int:id>', views.DeleteTransaction, name="DeleteTransaction"),
+    path('api/v1', views.Overview, name="Overview"),
+    path('api/v1/transactions', views.AllTransactions, name="AllTransactions"),
+    path('api/v1/transactions/<int:id>', views.TransactionsDetails, name="TransactionsDetails"),
+    path('api/v1/transactions/create', views.AddTransactions, name="AddTransactions"),
+    path('api/v1/transactions/update/<int:id>', views.UpdateTransactionDetails, name="UpdateTransactionDetails"),
+    path('api/v1/transactions/delete/<int:id>', views.DeleteTransaction, name="DeleteTransaction"),
 ]
