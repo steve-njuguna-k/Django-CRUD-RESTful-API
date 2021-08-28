@@ -1,4 +1,3 @@
-from django.http.response import Http404
 from rest_framework.response import Response
 from .models import Transactions
 from .serializers import TransactionsSerializer
@@ -32,10 +31,12 @@ def TransactionsDetails(request, id):
 @api_view(['POST'])
 def AddTransactions(request):
     serializer = TransactionsSerializer(data=request.data)
+    
     if serializer.is_valid():
         serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+        
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 @api_view(['PUT'])
 def UpdateTransactionDetails(request, id):
@@ -44,9 +45,9 @@ def UpdateTransactionDetails(request, id):
 
     if serializer.is_valid():
         serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['DELETE'])
 def DeleteTransaction(request, id):
