@@ -5,7 +5,7 @@ from .serializers import TransactionsSerializer
 from rest_framework.decorators import api_view
 
 @api_view(['GET'])
-def ListTransaction(request):
+def ListTransactions(request):
     transactions = Transcations.objects.all()
     serializer = TransactionsSerializer(transactions, many=True)
     return JsonResponse(serializer.data)
@@ -34,7 +34,7 @@ def UpdateTransactionsDetails(request, id):
     return JsonResponse(serializer.data)
 
 @api_view(['DELETE'])
-def DeleteTransactions(request, id):
+def DeleteTransaction(request, id):
     transactions = Transcations.objects.get(id=id)
     transactions.delete()
     return Response({'Transaction Record Successfully Deleted!'})
