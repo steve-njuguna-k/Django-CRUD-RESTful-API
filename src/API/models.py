@@ -1,7 +1,6 @@
 from django.db import models
-import uuid
-
 from django.db.models.fields import UUIDField
+import uuid
 
 TRANSACTION_TYPE = [
     ('Debit', ('Debit')),
